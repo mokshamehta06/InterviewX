@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mock Interview - InterviewIQ</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="bg-pattern"></div>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <header class="top-header" id="top-header">
+      <div class="header-left">
+        <button class="menu-toggle" id="menu-toggle">☰</button>
+        <h1 class="page-title">Mock Interview</h1>
+      </div>
+      <div class="header-right">
+        <button class="theme-toggle" id="theme-toggle" title="Toggle theme">🌙</button>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <!-- Setup Phase -->
+      <div id="mock-setup">
+        <div class="card" style="max-width: 600px; margin: 0 auto;">
+          <h2 style="text-align: center; margin-bottom: 8px;">🎯 Start a Mock Interview</h2>
+          <p class="text-muted text-center mb-24">Configure your mock test and test your interview readiness</p>
+
+          <div class="form-group">
+            <label class="form-label" for="mock-company">Company (Optional)</label>
+            <select class="form-select" id="mock-company">
+              <option value="">General - All Companies</option>
+            </select>
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label class="form-label" for="mock-category">Category</label>
+              <select class="form-select" id="mock-category">
+                <option value="Mixed">Mixed (All Categories)</option>
+                <option value="Coding">Coding</option>
+                <option value="Technical">Technical</option>
+                <option value="HR">HR</option>
+                <option value="Aptitude">Aptitude</option>
+                <option value="DBMS">DBMS</option>
+                <option value="Operating System">Operating System</option>
+                <option value="OOPs">OOPs</option>
+                <option value="System Design">System Design</option>
+                <option value="Data Structures">Data Structures</option>
+                <option value="Behavioral">Behavioral</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="mock-difficulty">Difficulty</label>
+              <select class="form-select" id="mock-difficulty">
+                <option value="Mixed">Mixed</option>
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="mock-count">Number of Questions</label>
+            <select class="form-select" id="mock-count">
+              <option value="5">5 Questions</option>
+              <option value="10" selected>10 Questions</option>
+              <option value="15">15 Questions</option>
+              <option value="20">20 Questions</option>
+            </select>
+          </div>
+
+          <button class="btn btn-primary w-full btn-lg mt-16" id="start-mock-btn">
+            🚀 Start Mock Interview
+          </button>
+        </div>
+
+        <!-- Previous Tests -->
+        <div class="card mt-24">
+          <div class="card-header">
+            <div class="card-title">📜 Test History</div>
+          </div>
+          <div id="test-history">
+            <div class="loading-overlay"><div class="spinner"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Test Phase -->
+      <div id="mock-active" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <div>
+            <span class="badge badge-primary" id="mock-info-badge">--</span>
+          </div>
+          <div class="mock-timer" id="mock-timer">00:00</div>
+          <button class="btn btn-danger btn-sm" id="end-mock-btn">End Test</button>
+        </div>
+
+        <div class="mock-progress" id="mock-progress"></div>
+
+        <div class="mock-question-display">
+          <div class="mock-question-number" id="q-number">Question 1 of 10</div>
+          <div class="mock-question-text" id="q-text">Loading question...</div>
+          <div class="flex gap-8 mt-16 justify-center">
+            <span class="badge" id="q-category">--</span>
+            <span class="badge" id="q-difficulty">--</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Your Answer</label>
+          <textarea class="form-textarea" id="mock-answer" rows="5" placeholder="Type your answer here..."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: space-between;">
+          <button class="btn btn-secondary" id="prev-q-btn" disabled>← Previous</button>
+          <button class="btn btn-primary" id="next-q-btn">Next →</button>
+        </div>
+      </div>
+
+      <!-- Results Phase -->
+      <div id="mock-results" style="display: none;">
+        <div class="card text-center" style="max-width: 500px; margin: 0 auto; padding: 40px;">
+          <h2 style="font-size: 1.5rem; margin-bottom: 8px;">🎉 Mock Test Complete!</h2>
+          <p class="text-muted mb-24">Here's how you did</p>
+          
+          <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+            <div class="stat-card" style="flex-direction: column; text-align: center;">
+              <div class="stat-value" id="result-score" style="color: var(--green);">0/0</div>
+              <div class="stat-label">Score</div>
+            </div>
+            <div class="stat-card" style="flex-direction: column; text-align: center;">
+              <div class="stat-value" id="result-percentage" style="color: var(--accent-secondary);">0%</div>
+              <div class="stat-label">Percentage</div>
+            </div>
+            <div class="stat-card" style="flex-direction: column; text-align: center;">
+              <div class="stat-value" id="result-time" style="color: var(--cyan);">0s</div>
+              <div class="stat-label">Time Taken</div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; justify-content: center; margin-top: 24px;">
+            <button class="btn btn-primary" onclick="location.reload()">Take Another Test</button>
+            <a href="/pages/dashboard.html" class="btn btn-secondary">Dashboard</a>
+          </div>
+        </div>
+
+        <div class="card mt-24">
+          <div class="card-title mb-16">📋 Review Answers</div>
+          <div id="review-questions"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/mockInterview.js"></script>
+</body>
+</html>

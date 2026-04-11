@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>InterviewIQ - Ace Your Placement Interviews</title>
+  <meta name="description" content="InterviewIQ helps students prepare for company-specific placement interviews with AI-powered analysis, previous questions, mock interviews, and preparation roadmaps.">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="bg-pattern"></div>
+
+  <!-- Landing Navigation -->
+  <nav class="landing-nav" id="landing-nav">
+    <div class="landing-nav-brand">
+      <div class="sidebar-logo">IQ</div>
+      <span class="sidebar-brand">InterviewIQ</span>
+    </div>
+    <div class="landing-nav-links">
+      <button class="theme-toggle" id="theme-toggle" title="Toggle theme">🌙</button>
+      <a href="/pages/login.html" class="btn btn-secondary btn-sm">Login</a>
+      <a href="/pages/register.html" class="btn btn-primary btn-sm">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-badge">🎯 AI-Powered Interview Preparation</div>
+    <h1>
+      Crack Your Dream<br>
+      <span class="gradient-text">Placement Interview</span>
+    </h1>
+    <p>
+      Search any company and get previous interview questions, AI-generated analysis, 
+      preparation roadmaps, and mock interviews — all in one place.
+    </p>
+    <div class="hero-cta">
+      <a href="/pages/register.html" class="btn btn-primary btn-lg">Start Preparing →</a>
+      <a href="/pages/login.html" class="btn btn-secondary btn-lg">Login</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-value" id="stat-companies">10+</div>
+        <div class="hero-stat-label">Companies</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value" id="stat-questions">200+</div>
+        <div class="hero-stat-label">Interview Questions</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value" id="stat-categories">15+</div>
+        <div class="hero-stat-label">Categories</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-value" id="stat-ai">AI</div>
+        <div class="hero-stat-label">Powered Analysis</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="section-header">
+      <h2>Everything You Need to <span class="gradient-text">Ace Placements</span></h2>
+      <p>From question banks to AI mock interviews, we've got you covered.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(108, 92, 231, 0.15);">🔍</div>
+        <h3>Company-Specific Analysis</h3>
+        <p>Search any company and get detailed interview patterns, frequently asked questions, hiring rounds, and difficulty analysis.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(0, 206, 201, 0.15);">🤖</div>
+        <h3>AI-Powered Insights</h3>
+        <p>Google Gemini AI analyzes interview experiences and generates preparation roadmaps, important topics, and personalized checklists.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(253, 203, 110, 0.15);">📝</div>
+        <h3>Mock Interviews</h3>
+        <p>Take timed mock interviews with company-specific questions. Filter by category, difficulty, and topic for focused practice.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(0, 184, 148, 0.15);">📊</div>
+        <h3>Analytics & Charts</h3>
+        <p>Visual charts showing topic frequency, difficulty distribution, most asked questions, and round-wise analysis.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(253, 121, 168, 0.15);">📚</div>
+        <h3>Question Categories</h3>
+        <p>Questions organized by Aptitude, HR, Coding, DBMS, OS, Networks, OOPs, System Design, and company-specific topics.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon" style="background: rgba(116, 185, 255, 0.15);">🗺️</div>
+        <h3>Preparation Roadmap</h3>
+        <p>Week-by-week study plan with daily schedule, resources, and practice problems tailored for your target company.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Companies Section -->
+  <section class="popular-section">
+    <div class="section-header">
+      <h2>Popular Companies</h2>
+      <p>Students are preparing for these companies</p>
+    </div>
+    <div class="company-grid" id="popular-companies-grid">
+      <!-- Populated by JavaScript -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.85rem; border-top: 1px solid var(--border); margin-top: 40px;">
+    <p>© 2024 InterviewIQ — Built for placement preparation 🎓</p>
+  </footer>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/app.js"></script>
+  <script>
+    // Load popular companies on landing page
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const response = await API.get('/companies/popular');
+        if (response.success && response.data.companies) {
+          const grid = document.getElementById('popular-companies-grid');
+          grid.innerHTML = response.data.companies.map(c => `
+            <div class="company-card" onclick="window.location.href='/pages/login.html'">
+              <div class="company-logo">${c.name.substring(0, 2).toUpperCase()}</div>
+              <div class="company-name">${c.name}</div>
+              <div class="company-industry">${c.industry || 'IT Services'}</div>
+              ${c.hiringProcess?.overallDifficulty ? 
+                `<span class="company-difficulty difficulty-${c.hiringProcess.overallDifficulty.toLowerCase()}">${c.hiringProcess.overallDifficulty}</span>` : ''}
+            </div>
+          `).join('');
+        }
+      } catch (e) {
+        console.log('Could not load companies');
+      }
+
+      // Theme toggle
+      const toggle = document.getElementById('theme-toggle');
+      if (toggle) {
+        toggle.addEventListener('click', () => {
+          const current = document.documentElement.getAttribute('data-theme');
+          const next = current === 'light' ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+          toggle.textContent = next === 'light' ? '☀️' : '🌙';
+        });
+        // Load saved theme
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+          document.documentElement.setAttribute('data-theme', saved);
+          toggle.textContent = saved === 'light' ? '☀️' : '🌙';
+        }
+      }
+
+      // If already logged in, redirect to dashboard
+      if (localStorage.getItem('token')) {
+        window.location.href = '/pages/dashboard.html';
+      }
+    });
+  </script>
+</body>
+</html>

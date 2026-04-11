@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Analysis - InterviewIQ</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="bg-pattern"></div>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <header class="top-header" id="top-header">
+      <div class="header-left">
+        <button class="menu-toggle" id="menu-toggle">☰</button>
+        <h1 class="page-title" id="page-title">Company Analysis</h1>
+      </div>
+      <div class="header-right">
+        <button class="btn btn-secondary btn-sm" id="download-pdf-btn" title="Download as PDF">📄 Download PDF</button>
+        <button class="btn btn-secondary btn-sm" id="bookmark-btn" title="Bookmark">🔖 Bookmark</button>
+        <button class="theme-toggle" id="theme-toggle" title="Toggle theme">🌙</button>
+      </div>
+    </header>
+
+    <main class="main-content" id="main-content">
+      <!-- Loading State -->
+      <div id="loading-state" class="loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-text">Analyzing company data with AI...</div>
+      </div>
+
+      <!-- Company Header -->
+      <div class="company-header-banner" id="company-header" style="display: none;">
+        <div class="company-header-logo" id="company-logo">--</div>
+        <div class="company-header-info">
+          <h1 id="company-name">Company Name</h1>
+          <p id="company-description">Loading...</p>
+          <div class="company-header-meta">
+            <span class="company-meta-item" id="meta-industry">🏢 --</span>
+            <span class="company-meta-item" id="meta-difficulty">📊 --</span>
+            <span class="company-meta-item" id="meta-rounds">🔄 --</span>
+            <span class="company-meta-item" id="meta-salary">💰 --</span>
+            <span class="company-meta-item" id="meta-prep-time">⏱ --</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs" id="analysis-tabs" style="display: none;">
+        <button class="tab active" data-tab="overview">Overview</button>
+        <button class="tab" data-tab="culture">Culture & Reviews</button>
+        <button class="tab" data-tab="questions">Questions</button>
+        <button class="tab" data-tab="experiences">Experiences</button>
+        <button class="tab" data-tab="roadmap">Roadmap</button>
+        <button class="tab" data-tab="analytics">Analytics</button>
+      </div>
+
+      <!-- Tab: Overview -->
+      <div class="tab-content active" id="tab-overview" style="display: none;">
+        <div class="grid-2">
+          <div>
+            <h3 class="mb-16">🔄 Hiring Rounds</h3>
+            <div id="rounds-container"></div>
+          </div>
+          <div>
+            <h3 class="mb-16">💡 Key Tips</h3>
+            <div id="tips-container" class="card" style="padding: 20px;"></div>
+            <h3 class="mb-16 mt-24">⚠️ Common Mistakes</h3>
+            <div id="mistakes-container" class="card" style="padding: 20px;"></div>
+          </div>
+        </div>
+        <div class="mt-24">
+          <h3 class="mb-16">📋 Interview Pattern</h3>
+          <div class="card" id="pattern-container" style="padding: 20px;"></div>
+        </div>
+      </div>
+
+      <!-- Tab: Culture & Reviews -->
+      <div class="tab-content" id="tab-culture" style="display: none;">
+        <div class="grid-2 mb-24">
+          <div class="card" style="padding: 20px;">
+            <h3 class="mb-16">💖 Sentiment Analysis</h3>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+              <div style="font-size: 3rem; font-weight: bold; color: var(--accent-primary);" id="sentiment-score">--</div>
+              <div style="text-align: right;">
+                <div id="sentiment-positive" style="color: #4CAF50; font-weight: bold;">--% Positive</div>
+                <div id="sentiment-neutral" style="color: #9E9E9E;">--% Neutral</div>
+                <div id="sentiment-negative" style="color: #F44336; font-weight: bold;">--% Negative</div>
+              </div>
+            </div>
+            <!-- Sentiment Bar -->
+            <div style="display: flex; height: 12px; border-radius: 6px; overflow: hidden; background: var(--border-color);">
+              <div id="bar-positive" style="width: 0%; background: #4CAF50;"></div>
+              <div id="bar-neutral" style="width: 0%; background: #9E9E9E;"></div>
+              <div id="bar-negative" style="width: 0%; background: #F44336;"></div>
+            </div>
+          </div>
+          <div class="card" style="padding: 20px;">
+            <h3 class="mb-16">⭐ Rating Breakdown</h3>
+            <div class="rating-row mb-12">
+              <span style="display:inline-block; width: 120px;">Overall</span>
+              <span class="stars" id="rating-overall">★★★★★ (--)</span>
+            </div>
+            <div class="rating-row mb-12">
+              <span style="display:inline-block; width: 120px;">Culture</span>
+              <span class="stars" id="rating-culture">★★★★★ (--)</span>
+            </div>
+            <div class="rating-row mb-12">
+              <span style="display:inline-block; width: 120px;">Salary</span>
+              <span class="stars" id="rating-salary">★★★★★ (--)</span>
+            </div>
+            <div class="rating-row mb-12">
+              <span style="display:inline-block; width: 120px;">Work-Life Balance</span>
+              <span class="stars" id="rating-wlb">★★★★★ (--)</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="grid-2">
+          <div>
+            <h3 class="mb-16">🏢 Work Culture</h3>
+            <p id="culture-work" style="color: var(--text-secondary); line-height: 1.6;" class="mb-24">Loading...</p>
+            
+            <h3 class="mb-16">📈 Growth Opportunities</h3>
+            <p id="culture-growth" style="color: var(--text-secondary); line-height: 1.6;" class="mb-24">Loading...</p>
+            
+            <h3 class="mb-16">⚖️ Work-Life Balance</h3>
+            <p id="culture-balance" style="color: var(--text-secondary); line-height: 1.6;" class="mb-24">Loading...</p>
+          </div>
+          <div>
+            <h3 class="mb-16">💰 Salary & Benefits</h3>
+            <p id="culture-salary" style="color: var(--text-secondary); line-height: 1.6;" class="mb-24">Loading...</p>
+            
+            <div class="card mb-16" style="padding: 20px; border-left: 4px solid #4CAF50;">
+              <h3 class="mb-12">👍 Positive Points</h3>
+              <ul id="culture-positive" style="padding-left: 20px; color: var(--text-secondary);"></ul>
+            </div>
+            
+            <div class="card" style="padding: 20px; border-left: 4px solid #F44336;">
+              <h3 class="mb-12">👎 Common Complaints</h3>
+              <ul id="culture-complaints" style="padding-left: 20px; color: var(--text-secondary);"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Questions -->
+      <div class="tab-content" id="tab-questions" style="display: none;">
+        <div style="display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
+          <select class="form-select" id="filter-category" style="width: auto; min-width: 160px;">
+            <option value="">All Categories</option>
+          </select>
+          <select class="form-select" id="filter-difficulty" style="width: auto; min-width: 140px;">
+            <option value="">All Difficulties</option>
+            <option value="Easy">Easy</option>
+            <option value="Medium">Medium</option>
+            <option value="Hard">Hard</option>
+          </select>
+        </div>
+        <div id="questions-list"></div>
+      </div>
+
+      <!-- Tab: Experiences -->
+      <div class="tab-content" id="tab-experiences" style="display: none;">
+        <div style="display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap;">
+          <select class="form-select" id="filter-exp-role" style="width: auto; min-width: 140px;">
+            <option value="">All Roles</option>
+          </select>
+          <select class="form-select" id="filter-exp-location" style="width: auto; min-width: 140px;">
+            <option value="">All Locations</option>
+          </select>
+          <select class="form-select" id="filter-exp-level" style="width: auto; min-width: 140px;">
+            <option value="">All Levels</option>
+            <option value="Fresher">Fresher</option>
+            <option value="Experienced">Experienced</option>
+          </select>
+          <select class="form-select" id="filter-exp-type" style="width: auto; min-width: 140px;">
+            <option value="">All Types</option>
+            <option value="Full-time">Full-time</option>
+            <option value="Internship">Internship</option>
+          </select>
+        </div>
+        <div id="experiences-list"></div>
+      </div>
+
+      <!-- Tab: Roadmap -->
+      <div class="tab-content" id="tab-roadmap" style="display: none;">
+        <div id="roadmap-container">
+          <div class="loading-overlay"><div class="spinner"></div><div class="loading-text">Generating AI roadmap...</div></div>
+        </div>
+      </div>
+
+      <!-- Tab: Analytics -->
+      <div class="tab-content" id="tab-analytics" style="display: none;">
+        <div class="grid-2">
+          <div class="chart-container">
+            <div class="chart-title">📊 Question Category Distribution</div>
+            <div class="chart-wrapper"><canvas id="category-chart"></canvas></div>
+          </div>
+          <div class="chart-container">
+            <div class="chart-title">🎯 Difficulty Distribution</div>
+            <div class="chart-wrapper"><canvas id="difficulty-chart"></canvas></div>
+          </div>
+        </div>
+        <div class="grid-2 mt-16">
+          <div class="chart-container">
+            <div class="chart-title">🔥 Most Asked Topics</div>
+            <div class="chart-wrapper"><canvas id="topics-chart"></canvas></div>
+          </div>
+          <div class="chart-container">
+            <div class="chart-title">📈 Topic Frequency</div>
+            <div class="chart-wrapper"><canvas id="frequency-chart"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/charts.js"></script>
+  <script src="/js/analysis.js"></script>
+</body>
+</html>

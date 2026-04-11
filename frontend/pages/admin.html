@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - InterviewIQ</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div class="bg-pattern"></div>
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar"></aside>
+    <header class="top-header" id="top-header">
+      <div class="header-left">
+        <button class="menu-toggle" id="menu-toggle">☰</button>
+        <h1 class="page-title">Admin Dashboard</h1>
+      </div>
+      <div class="header-right">
+        <button class="theme-toggle" id="theme-toggle" title="Toggle theme">🌙</button>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <!-- Admin Stats -->
+      <div class="stats-grid" id="admin-stats">
+        <div class="stat-card">
+          <div class="stat-icon purple">👥</div>
+          <div class="stat-content">
+            <div class="stat-value" id="admin-users">0</div>
+            <div class="stat-label">Total Users</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon cyan">🏢</div>
+          <div class="stat-content">
+            <div class="stat-value" id="admin-companies">0</div>
+            <div class="stat-label">Companies</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon green">❓</div>
+          <div class="stat-content">
+            <div class="stat-value" id="admin-questions">0</div>
+            <div class="stat-label">Questions</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon orange">📝</div>
+          <div class="stat-content">
+            <div class="stat-value" id="admin-experiences">0</div>
+            <div class="stat-label">Experiences</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab active" data-tab="admin-users">Users</button>
+        <button class="tab" data-tab="admin-companies">Companies</button>
+        <button class="tab" data-tab="admin-analytics">Search Analytics</button>
+      </div>
+
+      <!-- Users Tab -->
+      <div class="tab-content active" id="tab-admin-users">
+        <div class="table-container">
+          <table class="data-table" id="users-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Joined</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="users-tbody">
+              <tr><td colspan="5" class="text-center"><div class="spinner"></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Companies Tab -->
+      <div class="tab-content" id="tab-admin-companies">
+        <div class="card mb-16">
+          <div class="card-title mb-16">Add New Company</div>
+          <form id="add-company-form">
+            <div class="grid-2">
+              <div class="form-group">
+                <label class="form-label">Company Name</label>
+                <input type="text" class="form-input" id="new-company-name" placeholder="e.g., Deloitte" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Industry</label>
+                <input type="text" class="form-input" id="new-company-industry" placeholder="e.g., IT Consulting" value="Information Technology">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Description</label>
+              <textarea class="form-textarea" id="new-company-desc" placeholder="Brief company description"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Company</button>
+          </form>
+        </div>
+        <div class="card">
+          <div class="card-title mb-16">Popular Companies</div>
+          <div id="admin-popular-companies"></div>
+        </div>
+      </div>
+
+      <!-- Analytics Tab -->
+      <div class="tab-content" id="tab-admin-analytics">
+        <div class="chart-container">
+          <div class="chart-title">📈 Search Trend (Last 7 Days)</div>
+          <div class="chart-wrapper"><canvas id="search-trend-chart"></canvas></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="/js/utils.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>
