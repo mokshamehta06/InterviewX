@@ -1,4 +1,4 @@
-# InterviewIQ 🎯
+# InterviewIQ!! 🎯
 
 > **AI-Powered Placement Interview Preparation Platform**
 
